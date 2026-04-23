@@ -318,6 +318,36 @@
 						}
 					]
 				}
+			},
+			{
+				"name": "Web1",
+				"type": "WebActivity",
+				"dependsOn": [
+					{
+						"activity": "ForEach1",
+						"dependencyConditions": [
+							"Failed",
+							"Skipped",
+							"Succeeded"
+						]
+					}
+				],
+				"policy": {
+					"timeout": "0.12:00:00",
+					"retry": 0,
+					"retryIntervalInSeconds": 30,
+					"secureOutput": false,
+					"secureInput": false
+				},
+				"userProperties": [],
+				"typeProperties": {
+					"method": "POST",
+					"url": "https://prod-12.southindia.logic.azure.com:443/workflows/91f2454c14b743f09a6c002477f9788c/triggers/When_an_HTTP_request_is_received/paths/invoke?api-version=2016-10-01&sp=%2Ftriggers%2FWhen_an_HTTP_request_is_received%2Frun&sv=1.0&sig=oaZHkBowF2x-ndEApNQZ1bv_M5S1Unhwgy6SeO4v4Aw",
+					"body": {
+						"value": "{\n    \"pipelinename\" : \"@{pipeline().Pipeline}\",\n    \"pipelinerunid\" : \"@{pipeline().RunId}\"\n}",
+						"type": "Expression"
+					}
+				}
 			}
 		],
 		"parameters": {
@@ -345,13 +375,13 @@
 					{
 						"schema": "dbo",
 						"table": "DimDate",
-						"cdc_col": "updated_at",
+						"cdc_col": "date",
 						"from_date": ""
 					},
 					{
 						"schema": "dbo",
 						"table": "FactStream",
-						"cdc_col": "updated_at",
+						"cdc_col": "stream_timestamp",
 						"from_date": ""
 					}
 				]
